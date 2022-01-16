@@ -77,10 +77,6 @@ contract('Token', ([deployer, receiver, exchange]) => {
         })
 
         describe('failure', async () => {
-            beforeEach(async () => {
-
-            })
-
             it('rejects insufficient balances', async() => {
                 let invalidAmount
                 invalidAmount = tokens(100000000) // 100M > totalSupply
