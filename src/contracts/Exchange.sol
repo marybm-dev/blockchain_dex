@@ -11,7 +11,7 @@ TODO:
 [x] Deposit tokens
 [x] Withdraw tokens
 [x] Check balances
-[ ] Make order
+[x] Make order
 [ ] Cancel order
 [ ] Fill order
 [ ] Charge fees
@@ -27,10 +27,32 @@ contract Exchange {
 
     // token address maps to user's balance
     mapping(address => mapping(address => uint256)) public tokens;
+    // tracks the orders by id
+    mapping(uint256 => _Order) public orders;
+    uint256 public orderCount;
 
     // events
     event Deposit(address token, address user, uint256 amount, uint256 balance);
     event Withdraw(address token, address user, uint amount, uint balance);
+    event Order(
+        uint256 id,
+        address user,
+        address tokenGet,
+        uint256 amountGet,
+        address tokenGive,
+        uint256 amountGive,
+        uint256 timestamp
+    );
+
+    struct _Order {
+        uint256 id;
+        address user;
+        address tokenGet;
+        uint256 amountGet;
+        address tokenGive;
+        uint256 amountGive;
+        uint256 timestamp;
+    }
 
     constructor(address _feeAccount, uint256 _feePercent) public {
         feeAccount = _feeAccount;
@@ -71,5 +93,11 @@ contract Exchange {
 
     function balanceOf(address _token, address _user) public view returns (uint256) {
         return tokens[_token][_user];
+    }
+
+    function makeOrder(address _tokenGet, uint256 _amountGet, address _tokenGive, uint256 _amountGive) public  {
+        orderCount = orderCount.add(1);
+        orders[orderCount] = _Order(orderCount, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now);
+        emit Order(orderCount, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now);
     }
 }
