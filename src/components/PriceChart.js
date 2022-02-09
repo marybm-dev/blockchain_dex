@@ -24,7 +24,7 @@ const showPriceChart = (priceCart) => {
       <div className="price">
         <h4>DAPP/ETH &nbsp; {priceSymbol(priceCart.lastPriceChange)} &nbsp; {priceCart.lastPrice}</h4>
       </div>
-      <Chart options={chartOptions} series={priceCart.series} type='candlestick' width='100%' height='100%' />
+      <Chart options={chartOptions} series={dummyData} type='candlestick' width='100%' height='100%' />
     </div>
   )
 }
