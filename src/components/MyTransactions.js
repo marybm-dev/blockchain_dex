@@ -9,20 +9,18 @@ import {
   myOpenOrdersSelector
  } from '../store/selectors'
 
-const showMyFilledOrders = (myFilledOrders) => {
+ const showMyFilledOrders = (myFilledOrders) => {
   return(
     <tbody>
-      {
-        myFilledOrders.map((order) => {
-          return (
-            <tr key={order.id}>
-              <td className="text-muted">{order.formattedTimestamp}</td>
-              <td className={`text-${order.orderTypeClass}`}>{order.orderSign}{order.tokenAmount}</td>
-              <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
-            </tr>
-          )
-        })
-      }
+      { myFilledOrders.map((order) => {
+        return (
+          <tr key={order.id}>
+            <td className="text-muted">{order.formattedTimestamp}</td>
+            <td className={`text-${order.orderTypeClass}`}>{order.orderSign}{order.tokenAmount}</td>
+            <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
+          </tr>
+        )
+      }) }
     </tbody>
   )
 }
@@ -73,7 +71,7 @@ class MyTransactions extends Component {
                     <th>Cancel</th>
                   </tr>
                 </thead>
-                { this.props.showMyOpenOrderss ? showMyOpenOrders(this.props.myOpenOrders) : <Spinner type="table" /> }
+                { this.props.showMyOpenOrders ? showMyOpenOrders(this.props.myOpenOrders) : <Spinner type="table" /> }
               </table>
             </Tab>
           </Tabs>
