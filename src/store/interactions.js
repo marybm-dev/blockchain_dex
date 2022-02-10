@@ -10,7 +10,9 @@ import {
   filledOrdersLoaded,
   allOrdersLoaded,
   orderCancelling,
-  orderCancelled
+  orderCancelled,
+  orderFilling,
+  orderFilled
 } from './actions'
 
 export const loadWeb3 = (dispatch) =>  {
@@ -86,8 +88,24 @@ export const cancelOrder = (dispatch, exchange, order, account) => {
   })
 }
 
+export const fillOrder = (dispatch, exchange, order, account) => {
+  exchange.methods.fillOrder(order.id).send({ from: account })
+  .on('transactionHash', (hash) => {
+    // dipatch redux action
+    dispatch(orderFilling())
+  })
+  .on('error', (error) => {
+    console.log(error)
+    window.alert('There was an error!')
+  })
+}
+
 export const subscribeToEvents = async (exchange, dispatch) => {
   exchange.events.Cancel({}, (error, event) => {
     dispatch(orderCancelled(event.returnValues))
+  })
+
+  exchange.events.Trade({}, (error, event) => {
+    dispatch(orderFilled(event.returnValues))
   })
 }
