@@ -72,7 +72,6 @@ class OrderBook extends Component {
   }
 }
 
-
 function mapStateToProps(state) {
   const orderBookLoaded = orderBookLoadedSelector(state)
   const orderFilling = orderFillingSelector(state)
