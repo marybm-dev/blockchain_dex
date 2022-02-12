@@ -1,4 +1,4 @@
-import { get, groupBy, reject, maxBy, minBy } from 'lodash'
+import { get, groupBy, reject, maxBy, minBy, create } from 'lodash'
 import { createSelector } from 'reselect'
 import moment from 'moment'
 import { ETHER_ADDRESS, tokens, ether, GREEN, RED, formatBalance } from '../helpers'
@@ -17,9 +17,6 @@ export const exchangeSelector = createSelector(exchange, e => e)
 
 const token = state => get(state, 'token.contract')
 export const tokenSelector = createSelector(token, t => t)
-
-const web3 = state => get(state, 'web3.contract')
-export const web3Selector = createSelector(web3, w3 => w3)
 
 export const contractsLoadedSelector = createSelector(
   tokenLoaded,
@@ -354,3 +351,15 @@ export const exchangeTokenBalanceSelector = createSelector(
     return formatBalance(balance)
   }
 )
+
+const etherDepositAmount = state => get(state, 'exchange.etherDepositAmount', null)
+export const etherDepositAmountSelector = createSelector(etherDepositAmount, amount => amount)
+
+const etherWithdrawAmount = state => get(state, 'exchange.etherWithdrawAmount', null)
+export const etherWithdrawAmountSelector = createSelector(etherWithdrawAmount, amount => amount)
+
+const tokenDepositAmount = state => get(state, 'exchange.tokenDepositAmount', null)
+export const tokenDepositAmountSelector = createSelector(tokenDepositAmount, amount => amount)
+
+const tokenWithdrawAmount = state => get(state, 'exchange.tokenWithdrawAmount', null)
+export const tokenWithdrawAmountSelector = createSelector(tokenWithdrawAmount, amount => amount)
