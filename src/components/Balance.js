@@ -222,7 +222,7 @@ function mapStateToProps(state) {
     balancesLoading,
     showForm: !balancesLoading,
     etherDepositAmount: etherDepositAmountSelector(state),
-    etherWithdrawAmountSelector: etherWithdrawAmountSelector(state),
+    etherWithdrawAmount: etherWithdrawAmountSelector(state),
     tokenDepositAmount: tokenDepositAmountSelector(state),
     tokenWithdrawAmount: tokenWithdrawAmountSelector(state),
   }

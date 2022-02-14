@@ -157,18 +157,15 @@ export const depositEther = (dispatch, exchange, web3, amount, account) => {
 }
 
 export const withdrawEther = (dispatch, exchange, web3, amount, account) => {
-  if (amount) {
-    exchange.methods.withdrawEther(web3.utils.toWei(amount, 'ether')).send({ from: account })
-    .on('transactionHash', (hash) => {
-      dispatch(balancesLoading())
-    })
-    .on('error',(error) => {
-      console.error(error)
-      window.alert(`There was an error!`)
-    })
-  }
+  exchange.methods.withdrawEther(web3.utils.toWei(amount, 'ether')).send({ from: account })
+  .on('transactionHash', (hash) => {
+    dispatch(balancesLoading())
+  })
+  .on('error',(error) => {
+    console.error(error)
+    window.alert(`There was an error!`)
+  })
 }
-
 
 export const depositToken = (dispatch, exchange, web3, token, amount, account) => {
   amount = web3.utils.toWei(amount, 'ether')
