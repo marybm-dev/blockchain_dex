@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Tabs, Tab } from 'react-bootstrap'
 import Spinner from './Spinner'
 import {
-  loadWeb3,
   loadBalances,
   depositEther,
   depositToken,
@@ -14,6 +13,7 @@ import {
   exchangeSelector,
   tokenSelector,
   accountSelector,
+  web3Selector,
   etherBalanceSelector,
   tokenBalanceSelector,
   exchangeEtherBalanceSelector,
@@ -30,12 +30,11 @@ import {
   tokenDepositAmountChanged,
   tokenWithdrawAmountChanged,
 } from '../store/actions'
-
 const showForm = (props) => {
-  const web3 = loadWeb3(props.dispatch)
   const {
     dispatch,
     exchange,
+    web3,
     account,
     etherBalance,
     tokenBalance,
@@ -189,8 +188,7 @@ class Balance extends Component {
   }
 
   async loadBlockchainData() {
-    const { dispatch, exchange, token, account } = this.props
-    const web3 = loadWeb3(this.props.dispatch)
+    const { dispatch, web3, exchange, token, account } = this.props
     await loadBalances(dispatch, web3, exchange, token, account)
   }
 
@@ -201,7 +199,7 @@ class Balance extends Component {
           Balance
         </div>
         <div className="card-body">
-          { this.props.showForm ? showForm(this.props) : <Spinner /> }
+          {this.props.showForm ? showForm(this.props) : <Spinner />}
         </div>
       </div>
     )
@@ -210,11 +208,12 @@ class Balance extends Component {
 
 function mapStateToProps(state) {
   const balancesLoading = balancesLoadingSelector(state)
-  console.log("balancesLoading", balancesLoading)
+
   return {
+    account: accountSelector(state),
     exchange: exchangeSelector(state),
     token: tokenSelector(state),
-    account: accountSelector(state),
+    web3: web3Selector(state),
     etherBalance: etherBalanceSelector(state),
     tokenBalance: tokenBalanceSelector(state),
     exchangeEtherBalance: exchangeEtherBalanceSelector(state),

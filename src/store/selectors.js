@@ -1,10 +1,13 @@
-import { get, groupBy, reject, maxBy, minBy, create } from 'lodash'
+import { get, groupBy, reject, maxBy, minBy } from 'lodash'
 import { createSelector } from 'reselect'
 import moment from 'moment'
 import { ETHER_ADDRESS, tokens, ether, GREEN, RED, formatBalance } from '../helpers'
 
 const account = state => get(state, 'web3.account')
 export const accountSelector = createSelector(account, a => a)
+
+const web3 = state => get(state, 'web3.connection')
+export const web3Selector = createSelector(web3, w => w)
 
 const tokenLoaded = state => get(state, 'token.loaded', false)
 export const tokenLoadedSelector = createSelector(tokenLoaded, tl => tl)
@@ -363,3 +366,9 @@ export const tokenDepositAmountSelector = createSelector(tokenDepositAmount, amo
 
 const tokenWithdrawAmount = state => get(state, 'exchange.tokenWithdrawAmount', null)
 export const tokenWithdrawAmountSelector = createSelector(tokenWithdrawAmount, amount => amount)
+
+const buyOrder = state => get(state, 'exchange.buyOrder', {})
+export const buyOrderSelector = createSelector(buyOrder, order => order)
+
+const sellOrder = state => get(state, 'exchange.sellOrder', {})
+export const sellOrderSelector = createSelector(sellOrder, order => order)
