@@ -5,8 +5,8 @@ contract Token {
     using SafeMath for uint;
 
     // variables
-    string public name = "Queer Token";
-    string public symbol = "QUEER";
+    string public name = "DAPP Token";
+    string public symbol = "DAPP";
     uint256 public decimals = 18;
     uint256 public totalSupply;
     mapping(address => uint256) public balanceOf;
